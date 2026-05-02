@@ -1,0 +1,23 @@
+# Ableton Live 11 MCP Remote Server
+# Dependencies für Ableton MCP Server
+
+# STANDARD LIBRARY ONLY!
+# Der Server nutzt nur Python Standard-Bibliotheken:
+# - socket (Networking)
+# - json (Data serialization)
+# - threading (Multi-threading)
+# - time (Timing)
+# - os (Operating system interface)
+# - pathlib (Path handling)
+
+# ⚠️ SYSTEMANFORDERUNGEN (NICHT PIP-INSTALLIERBAR):
+# 1. Python 3.8+ (mit pip)
+# 2. Ableton Live 11 Suite (instaliert auf Windows)
+# 3. Windows OS (Server läuft auf localhost:9877)
+
+# INSTALLATION:
+# pip install -r requirements.txt
+# (Installiert nichts, aber validiert Python-Setup)
+
+# START SERVER:
+# py standalone_ableton_server.py
