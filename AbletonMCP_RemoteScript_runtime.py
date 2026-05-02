@@ -1676,9 +1676,39 @@ class AbletonMCP(ControlSurface):
         item = self._find_browser_item_by_uri(app.browser, item_uri)
         if not item:
             raise ValueError("Item not found: " + item_uri)
+
+        # Get device count BEFORE loading
+        device_count_before = len(track.devices)
+
+        # Select track and load item
         self._song.view.selected_track = track
-        app.browser.load_item(item)
-        return {"loaded": True, "item_name": item.name, "track_name": track.name}
+        try:
+            app.browser.load_item(item)
+        except Exception as e:
+            raise RuntimeError("Failed to load browser item: " + str(e))
+
+        # VERIFY that device was actually loaded
+        # Give Live a moment to update
+        import time
+        time.sleep(0.1)
+
+        device_count_after = len(track.devices)
+        loaded = device_count_after > device_count_before
+
+        # Get the newly loaded device info
+        newly_loaded_device = None
+        if loaded and device_count_after > 0:
+            newly_loaded_device = track.devices[-1]  # Last device is usually the newest
+
+        return {
+            "loaded": loaded,
+            "item_name": item.name if hasattr(item, "name") else "?",
+            "track_name": track.name,
+            "device_count_before": device_count_before,
+            "device_count_after": device_count_after,
+            "newly_loaded_device": self._serialize_device(newly_loaded_device, device_count_after - 1) if newly_loaded_device else None,
+            "verification": "PASSED" if loaded else "FAILED - No device added to track"
+        }
 
     def _select_device_on_track(self, track, device):
         self._song.view.selected_track = track
