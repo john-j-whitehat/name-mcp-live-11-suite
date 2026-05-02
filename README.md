@@ -21,36 +21,48 @@ Standalone Socket Server für Ableton Live 11 Remote Control via Model Context P
 - **NONE!** Der Server nutzt nur Standard-Bibliotheken
   - socket, json, threading, time, os, pathlib
 
-## 🚀 Quick Start
+## 🚀 Quick Start (5 Minutes)
 
-### 1. Clone Repository
+**👉 [DETAILED SETUP GUIDE - SETUP_GUIDE.md](SETUP_GUIDE.md)**
+
+### TL;DR
+
 ```bash
+# 1. Clone Repository
 git clone https://github.com/john-j-whitehat/name-mcp-live-11-suite.git
 cd name-mcp-live-11-suite
-```
 
-### 2. Install (Optional - nur zur Validierung)
-```bash
-pip install -r requirements.txt
-```
+# 2. IMPORTANT: Open Ableton Live 11!
 
-### 3. Start Server
-```bash
+# 3. Start Server
 py standalone_ableton_server.py
+
+# 4. Test (New PowerShell Window)
+python read_clips_socket.py
 ```
 
 ### Expected Output
 ```
 🎵 STANDALONE ABLETON MCP SERVER - STARTUP
-✅ Runtime Script geladen (100912 bytes)
+✅ Runtime Script geladen
 ✅ Runtime Code ausgeführt
 ✅ AbletonMCP Klasse gefunden
 
-[1] Initialisiere Socket Server...
 ✅ Socket Server gestartet auf localhost:9877
 
 ABLETON MCP SERVER - READY!
 Warte auf Verbindungen...
+```
+
+**Test Output:**
+```
+📋 CLIPNAMEN AUSLESEN - ALLE TRACKS
+✅ 5 Tracks gefunden
+
+Track 4 (Fucker):
+  Slot 0: ✅ 'Test_Melody'
+  Slot 1: ✅ 'Test_Notes_2'
+  Slot 2: ✅ 'Copilot ist Dumm!'
 ```
 
 ## 🔧 Server Details
@@ -82,18 +94,24 @@ Warte auf Verbindungen...
 
 ## 📚 Full API Reference
 
-See `standalone_ableton_server.py` for complete method list:
-- `get_session_info()`
-- `get_track_info(track_index)`
-- `set_track_name(track_index, name)`
-- `create_midi_track(index)`
-- `create_clip(track_index, clip_index, length)`
-- `add_notes_to_clip(track_index, clip_index, notes)`
-- `set_tempo(tempo)`
-- `start_playback()`
-- `stop_playback()`
-- `fire_clip(track_index, clip_index)`
-- `stop_clip(track_index, clip_index)`
+### Device Parameters (NEW!)
+See `DEVICE_PARAMETERS_API.md`:
+- `get_device_parameters()` - Read all 195 Operator parameters!
+- `set_device_parameter()` - Change parameters in real-time
+- `get_track_devices()` - Discover instruments
+- `load_instrument_or_effect()` - Load Operator, Sampler, etc.
+
+### Core API
+See `standalone_ableton_server_v2.py`:
+- `get_session_info()` - Read tempo, tracks, master volume
+- `get_track_info(track_index)` - Full track details
+- `set_track_name(track_index, name)` - Rename tracks
+- `create_midi_track(index)` - Create new MIDI tracks
+- `create_clip(track_index, clip_index, length)` - Create clips
+- `add_notes_to_clip(track_index, clip_index, notes)` - Add MIDI notes
+- `set_tempo(tempo)` - Change BPM
+- `start_playback()` / `stop_playback()` - Transport control
+- `fire_clip(track_index, clip_index)` - Play clips
 
 ## 🧪 Testing
 
@@ -124,6 +142,16 @@ Oliver (Meister)
 
 ---
 
-**Status:** ✅ Production Ready
+**Status:** ✅ Production Ready - v2.0
 **Last Updated:** 2026-05-02
-**Version:** 1.0.0
+**Version:** 2.0.0
+
+---
+
+## 🎉 What's New in v2.0
+
+✅ **Device Parameters API** - Control 195+ parameters on Operator!
+✅ **New Test Suite** - TEST_DEVICE_PARAMETERS.py
+✅ **Complete Documentation** - SETUP_GUIDE.md + DEVICE_PARAMETERS_API.md
+✅ **Production Tested** - All systems verified & stable
+✅ **Full LOM Access** - Get/Set any parameter in Ableton Live
